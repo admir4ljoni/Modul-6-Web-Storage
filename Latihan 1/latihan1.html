@@ -9,23 +9,31 @@
 <center>
     <h1>Selamat Datang, Member!</h1>
     <button onclick="gantiNama(event)">Masukkan Nama</button>
-    <button onclick="hapusNama()">Hapus Nama</button>
+    <button id="tombolHapus" onclick="hapusNama()">Hapus Nama</button>
 </center>
 
 <script type="text/javascript">
     const namaMember = document.querySelector('h1');
+    const tombolHapus = document.getElementById('tombolHapus');
 
-    // Mengecek apakah sudah ada nama tersimpan di localStorage
-    const namaTersimpan = localStorage.getItem('nama');
-    if (namaTersimpan) {
-        namaMember.innerHTML = 'Halo ' + namaTersimpan + '!';
+    // Menampilkan nama sesuai data yang tersimpan di localStorage
+    function tampilkanNama() {
+        const namaTersimpan = localStorage.getItem('nama');
+        if (namaTersimpan) {
+            namaMember.innerHTML = 'Halo ' + namaTersimpan + '!';
+            tombolHapus.style.display = 'inline-block';
+        } else {
+            namaMember.innerHTML = 'Selamat Datang, Member!';
+            tombolHapus.style.display = 'none';
+        }
     }
 
     function gantiNama(e) {
         let nama = prompt('Masukkan nama Anda:');
-        if (nama && nama.trim() !== "") {
-            localStorage.setItem('nama', nama);
-            namaMember.innerHTML = 'Halo ' + nama + '!';
+        if (nama === null) return; // klik Batal, nama lama tetap tersimpan
+        if (nama.trim() !== "") {
+            localStorage.setItem('nama', nama.trim());
+            tampilkanNama();
         } else {
             alert('Nama tidak boleh kosong!');
         }
@@ -33,9 +41,16 @@
     }
 
     function hapusNama() {
-        localStorage.removeItem('nama');
-        namaMember.innerHTML = 'Selamat Datang, Member!';
+        if (confirm('Yakin ingin menghapus nama member?')) {
+            localStorage.removeItem('nama');
+            tampilkanNama();
+        }
     }
+
+    // Ikut diperbarui jika nama diubah atau dihapus dari tab lain
+    window.addEventListener('storage', tampilkanNama);
+
+    tampilkanNama();
 </script>
 </body>
 </html>
