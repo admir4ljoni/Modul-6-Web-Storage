@@ -9,6 +9,7 @@
 <center>
     <h1>Selamat Datang, Member!</h1>
     <button onclick="gantiNama(event)">Masukkan Nama</button>
+    <button onclick="hapusNama()">Hapus Nama</button>
 </center>
 
 <script type="text/javascript">
@@ -29,6 +30,11 @@
             alert('Nama tidak boleh kosong!');
         }
         e.preventDefault();
+    }
+
+    function hapusNama() {
+        localStorage.removeItem('nama');
+        namaMember.innerHTML = 'Selamat Datang, Member!';
     }
 </script>
 </body>
