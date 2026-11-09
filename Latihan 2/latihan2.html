@@ -78,6 +78,16 @@
           transform: translateX(26px);
         }
 
+        /* Tema gelap, aktif saat body memiliki class dark */
+        body.dark {
+            background-color: #262626;
+            color: white;
+        }
+
+        body.dark .tulisan {
+            border-color: #ddd;
+        }
+
     </style>
 </head>
 <body>
@@ -92,5 +102,21 @@
               <span class="slider"></span>
             </label>
         </div>
+
+    <script type="text/javascript">
+        const toggle = document.querySelector('.switch input');
+
+        // Menerapkan tema yang tersimpan saat halaman dibuka
+        if (localStorage.getItem('tema') === 'dark') {
+            document.body.classList.add('dark');
+            toggle.checked = true;
+        }
+
+        function ubahTema(e) {
+            const gelap = e.target.checked;
+            document.body.classList.toggle('dark', gelap);
+            localStorage.setItem('tema', gelap ? 'dark' : 'light');
+        }
+    </script>
 </body>
 </html>
